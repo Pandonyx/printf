@@ -7,60 +7,53 @@
  */
 int _printf(const char *format, ...)
 {
-va_list args; // declare va_list variable to hold additional arguments
-va_start(args, format); // initialize args to point to first optional argument
-int count = 0; // initialize count to 0
-// loop through the format string
+va_list args;
+va_start(args, format);
+int count = 0;
 while (*format)
 {
-// check if current character is a format specifier (%)
 if (*format == '%')
 {
-switch (*(format + 1)) // check the next character to determine the format specifier
+switch (*(format + 1))
 {
-// case for %c format specifier
 case 'c':
 {
-char c = (char) va_arg(args, int); // retrieve the next argument as a character
-putchar(c); // print the character
-count++; // increment count
+char c = (char) va_arg(args, int);
+putchar(c);
+count++;
 break;
 }
-// case for %s format specifier
 case 's':
 {
-char *s = va_arg(args, char*); // retrieve the next argument as a string
-while (*s) // loop through the string
+char *s = va_arg(args, char*);
+while (*s)
 {
-putchar(*s); // print each character of the string
-s++; // move to the next character
-count++; // increment count for each character printed
+putchar(*s);
+s++;
+count++;
 }
 break;
 }
-// case for %% format specifier (literal %)
 case '%':
 {
-putchar('%'); // print the literal %
-count++; // increment count
+putchar('%');
+count++;
 break;
 }
-// default case for unknown format specifier (ignore it)
 default:
 {
-// Unknown conversion specifier, ignore it
 break;
 }
 }
-format += 2; // Move to next format specifier (skip over the % and the specifier character)
+format += 2;
 }
-else // current character is not a format specifier
+else
 {
-putchar(*format); // print the character
-format++; // move to the next character in the format string
-count++; // increment count
+putchar(*format);
+format++;
+count++;
 }
 }
-va_end(args); // free any memory associated with the va_list variable
-return count; // return the total number of characters printed
+va_end(args);
+return count;
 }
